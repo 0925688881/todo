@@ -1,4 +1,4 @@
-const GHPATH = '/todo-app'; // 替換為你的儲存庫名稱
+const GHPATH = '/todo'; // 替換為你的儲存庫名稱
 const APP_PREFIX = 'todo_';
 const VERSION = 'version_01';
 const CACHE_NAME = APP_PREFIX + VERSION;

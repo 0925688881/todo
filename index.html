@@ -32,7 +32,7 @@
   <script src="script.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/todo-app/sw.js', { scope: '/todo-app/' })
+      navigator.serviceWorker.register('/todo/sw.js', { scope: '/todo/' })
         .then(reg => console.log('Service Worker registered:', reg))
         .catch(err => console.error('Service Worker registration failed:', err));
     }

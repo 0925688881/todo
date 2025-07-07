@@ -2,14 +2,14 @@
   "name": "吳順發的任務記錄",
   "short_name": "任務記錄",
   "description": "一個簡單的待辦事項應用程式，支援優先級排序和離線存取",
-  "scope": "/todo-app/",
-  "start_url": "/todo-app/",
+  "scope": "/todo/",
+  "start_url": "/todo/",
   "background_color": "#fff9e6",
   "theme_color": "#007bff",
   "display": "standalone",
   "icons": [
     {
-      "src": "/todo-app/img/icon.png",
+      "src": "/todo/img/icon.png",
       "type": "image/png",
       "sizes": "512x512"
     }
