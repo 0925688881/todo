@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>吳順發的任務記錄</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="manifest" href="/todo-app/manifest.json">
+  <link rel="canonical" href="https://<你的用戶名>.github.io/todo-app/" />
+</head>
+<body>
+  <div class="container">
+    <h1>吳順發的任務記錄</h1>
+    <button id="add-task-btn" class="fab"><span class="material-icons">add</span></button>
+    <div id="task-list"></div>
+    <div id="modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>新增待辦事項</h2>
+        <input type="text" id="task-title" placeholder="標題" required>
+        <textarea id="task-desc" placeholder="描述（選填）"></textarea>
+        <select id="task-priority">
+          <option value="low">低</option>
+          <option value="medium">中</option>
+          <option value="high">高</option>
+        </select>
+        <button onclick="addTask()">新增</button>
+        <button onclick="closeModal()">取消</button>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/todo-app/sw.js', { scope: '/todo-app/' })
+        .then(reg => console.log('Service Worker registered:', reg))
+        .catch(err => console.error('Service Worker registration failed:', err));
+    }
+  </script>
+</body>
+</html>
