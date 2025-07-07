@@ -9,7 +9,7 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "/todo/img/icon.png",
+      "src": "/todo/icon.png",
       "type": "image/png",
       "sizes": "512x512"
     }
