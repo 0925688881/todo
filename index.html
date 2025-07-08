@@ -13,8 +13,8 @@
   <div class="container">
     <h1>吳順發的任務記錄</h1>
     <div class="user-info">
-      <span>當前用戶：<span id="current-user">未登錄</span></span>
-      <button id="switch-user-btn">切換用戶</button>
+      <span>當前大任務：<span id="current-user">未登錄</span></span>
+      <button id="switch-user-btn">大任務名稱</button>
     </div>
     <button id="add-task-btn" class="fab"><span class="material-icons">add</span></button>
     <div id="task-list"></div>
@@ -28,21 +28,21 @@
           <option value="medium">中</option>
           <option value="high">高</option>
         </select>
-        <button onclick="addTask()">新增</button>
-        <button onclick="closeModal()">取消</button>
+        <button id="add-task-submit-btn">新增</button>
+        <button id="close-modal-btn">取消</button>
       </div>
     </div>
     <div id="user-modal" class="modal hidden">
       <div class="modal-content">
-        <h2>選擇或輸入用戶</h2>
+        <h2>選擇或輸入大任務</h2>
         <div id="user-list" class="user-list"></div>
-        <input type="text" id="username-input" placeholder="輸入新用戶名稱">
-        <button onclick="addNewUser()">新增用戶</button>
-        <button onclick="closeUserModal()">取消</button>
+        <input type="text" id="username-input" placeholder="輸入新大任務名稱">
+        <button id="add-user-btn">新增用戶</button>
+        <button id="close-user-modal-btn">取消</button>
       </div>
     </div>
   </div>
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
   <script>
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/todo-app/sw.js', { scope: '/todo-app/' })

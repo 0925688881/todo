@@ -31,18 +31,34 @@ h1 {
   color: #333;
 }
 
-#switch-user-btn {
+#switch-user-btn, #add-task-submit-btn, #close-modal-btn, #add-user-btn, #close-user-modal-btn {
   background-color: #28a745;
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
+  margin-left: 10px;
+  z-index: 1000;
+  pointer-events: auto;
+  transition: background-color 0.3s;
 }
 
-#switch-user-btn:hover {
+#switch-user-btn {
+  min-width: 120px;
+}
+
+#switch-user-btn:hover, #add-task-submit-btn:hover, #close-modal-btn:hover, #add-user-btn:hover, #close-user-modal-btn:hover {
   background-color: #218838;
+}
+
+#close-modal-btn, #close-user-modal-btn {
+  background-color: #dc3545;
+}
+
+#close-modal-btn:hover, #close-user-modal-btn:hover {
+  background-color: #c82333;
 }
 
 .fab {
@@ -57,6 +73,8 @@ h1 {
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   transition: background-color 0.3s, transform 0.2s;
+  z-index: 2000;
+  pointer-events: auto;
 }
 
 .fab:hover {
@@ -139,6 +157,7 @@ h1 {
   background-color: rgba(0,0,0,0.5);
   justify-content: center;
   align-items: center;
+  z-index: 3000;
 }
 
 .modal.hidden {
@@ -150,7 +169,9 @@ h1 {
   padding: 24px;
   border-radius: 8px;
   width: 90%;
-  max-width: 400px;
+  max-width: 450px;
+  position: relative;
+  z-index: 3100;
 }
 
 .modal-content h2 {
@@ -167,25 +188,14 @@ h1 {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
+  box-sizing: border-box;
 }
 
-.modal-content button {
-  padding: 12px 24px;
-  margin-right: 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.modal-content button:first-child {
-  background-color: #007bff;
-  color: white;
-}
-
-.modal-content button:last-child {
-  background-color: #dc3545;
-  color: white;
+#username-input {
+  height: 48px;
+  font-size: 18px;
+  padding: 12px;
+  margin-bottom: 16px;
 }
 
 hr {
@@ -216,13 +226,46 @@ p {
 
 .user-list-item {
   padding: 8px;
-  cursor: pointer;
   font-size: 16px;
   color: #333;
   border-radius: 4px;
   transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .user-list-item:hover {
   background-color: #f0f0f0;
+}
+
+.user-list-item span {
+  cursor: pointer;
+  flex-grow: 1;
+}
+
+.user-list-item button {
+  background-color: #007bff; /* 更改按鈕藍色 */
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 8px;
+  z-index: 1000;
+  pointer-events: auto;
+  transition: background-color 0.3s;
+}
+
+.user-list-item button.delete-btn {
+  background-color: #dc3545; /* 刪除按鈕紅色 */
+}
+
+.user-list-item button:hover {
+  background-color: #0056b3; /* 更改按鈕懸停 */
+}
+
+.user-list-item button.delete-btn:hover {
+  background-color: #c82333; /* 刪除按鈕懸停 */
 }
