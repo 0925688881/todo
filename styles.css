@@ -1,9 +1,13 @@
 body {
-  font-family: 'Roboto', Arial, sans-serif;
+  font-family: 'Noto Sans TC', 'Roboto', Arial, sans-serif; /* 使用 Noto Sans TC */
   background-color: #fff9e6;
   margin: 0;
   padding: 20px;
-  font-size: 22px; /* 原 18px -> 22px */
+  font-size: 22px;
+  font-weight: 400; /* 字體稍加粗 */
+  letter-spacing: 0.5px; /* 字間距 */
+  line-height: 1.5; /* 行高提升可讀性 */
+  -webkit-font-smoothing: antialiased; /* 字體平滑 */
 }
 
 .container {
@@ -13,10 +17,12 @@ body {
 }
 
 h1 {
-  font-size: 64px; /* 原 26px -> 32px */
+  font-size: 64px;
+  font-weight: 700; /* 加粗標題 */
   color: #333;
   margin-bottom: 20px;
   text-align: center;
+  letter-spacing: 1px;
 }
 
 .user-info {
@@ -24,7 +30,8 @@ h1 {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  font-size: 30px; /* 原 16px -> 20px */
+  font-size: 30px;
+  font-weight: 500;
 }
 
 .user-info span {
@@ -32,17 +39,25 @@ h1 {
 }
 
 #switch-user-btn, #add-task-submit-btn, #close-modal-btn, #add-user-btn, #close-user-modal-btn, #close-app-btn {
-  background-color: #28a745;
+  background: linear-gradient(135deg, #28a745 0%, #218838 100%); /* 漸變背景 */
   color: white;
   border: none;
-  padding: 12px 24px; /* 原 10px 20px -> 12px 24px，適配字體放大 */
-  border-radius: 4px;
+  padding: 12px 24px;
+  border-radius: 6px; /* 原 4px -> 6px */
   cursor: pointer;
-  font-size: 22px; /* 原 18px -> 22px */
+  font-size: 22px;
+  font-weight: 500;
   margin-left: 10px;
   z-index: 1000;
   pointer-events: auto;
-  transition: background-color 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 添加陰影 */
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+#switch-user-btn:hover, #add-task-submit-btn:hover, #close-modal-btn:hover, #add-user-btn:hover, #close-user-modal-btn:hover {
+  background: linear-gradient(135deg, #218838 0%, #1c7430 100%);
+  transform: translateY(-2px); /* 懸停縮放 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 #switch-user-btn {
@@ -50,40 +65,39 @@ h1 {
 }
 
 #close-app-btn {
-  background-color: #dc3545;
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
 }
 
-#switch-user-btn:hover, #add-task-submit-btn:hover, #close-modal-btn:hover, #add-user-btn:hover, #close-user-modal-btn:hover {
-  background-color: #218838;
-}
-
-#close-modal-btn, #close-user-modal-btn, #close-app-btn:hover {
-  background-color: #c82333;
+#close-app-btn:hover, #close-modal-btn, #close-user-modal-btn {
+  background: linear-gradient(135deg, #c82333 0%, #b21f2d 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .fab {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #007bff;
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
   color: white;
   border: none;
   padding: 18px;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
   z-index: 2000;
   pointer-events: auto;
 }
 
 .fab:hover {
-  background-color: #0056b3;
+  background: linear-gradient(135deg, #0056b3 0%, #004494 100%);
   transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .fab .material-icons {
-  font-size: 32px; /* 原 28px -> 32px */
+  font-size: 32px;
 }
 
 .task-card {
@@ -93,12 +107,13 @@ h1 {
   margin-bottom: 12px;
   display: flex;
   align-items: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .task-card:hover {
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .task-card.completed {
@@ -109,7 +124,7 @@ h1 {
 
 .task-card input[type="checkbox"] {
   margin-right: 12px;
-  width: 24px; /* 原 20px -> 24px */
+  width: 24px;
   height: 24px;
 }
 
@@ -119,27 +134,37 @@ h1 {
   border: none;
   cursor: pointer;
   color: #dc3545;
-  font-size: 20px; /* 原 16px -> 20px */
+  font-size: 20px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.task-card .delete-btn:hover {
+  color: #c82333;
 }
 
 .task-card strong {
-  font-size: 24px; /* 原 20px -> 24px */
+  font-size: 24px;
+  font-weight: 700;
 }
 
 .task-card p {
-  font-size: 20px; /* 原 16px -> 20px */
+  font-size: 20px;
+  font-weight: 400;
   margin: 5px 0;
 }
 
 .task-card .priority-low,
 .task-card .priority-medium,
 .task-card .priority-high {
-  font-size: 20px; /* 原 16px -> 20px */
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .task-card .task-date {
-  font-size: 18px; /* 原 14px -> 18px */
+  font-size: 18px;
   color: #666;
+  font-weight: 400;
   margin-top: 6px;
 }
 
@@ -154,7 +179,7 @@ h1 {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
   z-index: 3000;
@@ -172,11 +197,14 @@ h1 {
   max-width: 450px;
   position: relative;
   z-index: 3100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 添加模態框陰影 */
 }
 
 .modal-content h2 {
-  font-size: 28px; /* 原 24px -> 28px */
+  font-size: 28px;
+  font-weight: 700;
   margin-bottom: 15px;
+  letter-spacing: 1px;
 }
 
 .modal-content input,
@@ -184,16 +212,25 @@ h1 {
 .modal-content select {
   width: 100%;
   margin-bottom: 12px;
-  padding: 12px; /* 原 10px -> 12px */
+  padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 20px; /* 原 16px -> 20px */
+  border-radius: 6px; /* 原 4px -> 6px */
+  font-size: 20px;
+  font-weight: 400;
   box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus,
+.modal-content select:focus {
+  border-color: #007bff;
+  outline: none;
 }
 
 #username-input {
   height: 48px;
-  font-size: 22px; /* 原 18px -> 22px */
+  font-size: 22px;
   padding: 12px;
   margin-bottom: 16px;
 }
@@ -205,14 +242,16 @@ hr {
 
 h3 {
   color: #666;
-  font-size: 22px; /* 原 18px -> 22px */
+  font-size: 22px;
+  font-weight: 500;
   margin-bottom: 12px;
 }
 
 p {
   text-align: center;
   color: #666;
-  font-size: 20px; /* 原 16px -> 20px */
+  font-size: 20px;
+  font-weight: 400;
 }
 
 .user-list {
@@ -220,15 +259,16 @@ p {
   overflow-y: auto;
   margin-bottom: 15px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px; /* 原 4px -> 6px */
   padding: 10px;
 }
 
 .user-list-item {
   padding: 8px;
-  font-size: 20px; /* 原 16px -> 20px */
+  font-size: 20px;
+  font-weight: 400;
   color: #333;
-  border-radius: 4px;
+  border-radius: 6px;
   transition: background-color 0.2s;
   display: flex;
   align-items: center;
@@ -245,27 +285,31 @@ p {
 }
 
 .user-list-item button {
-  background-color: #007bff;
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
   color: white;
   border: none;
-  padding: 8px 16px; /* 原 6px 12px -> 8px 16px */
-  border-radius: 4px;
+  padding: 8px 16px;
+  border-radius: 6px; /* 原 4px -> 6px */
   cursor: pointer;
-  font-size: 18px; /* 原 14px -> 18px */
+  font-size: 18px;
+  font-weight: 500;
   margin-left: 8px;
   z-index: 1000;
   pointer-events: auto;
-  transition: background-color 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
 }
 
 .user-list-item button.delete-btn {
-  background-color: #dc3545;
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
 }
 
 .user-list-item button:hover {
-  background-color: #0056b3;
+  background: linear-gradient(135deg, #0056b3 0%, #004494 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .user-list-item button.delete-btn:hover {
-  background-color: #c82333;
+  background: linear-gradient(135deg, #c82333 0%, #b21f2d 100%);
 }
