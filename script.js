@@ -1,74 +1,67 @@
+// 全局變數
 let tasks = [];
 let currentUser = null;
 let users = [];
 
-// 等待 DOM 載入完成
-document.addEventListener('DOMContentLoaded', () => {
+// 初始化應用程式
+function initApp() {
   try {
     users = JSON.parse(localStorage.getItem('users')) || [];
-    console.log('Loaded users:', users);
     currentUser = localStorage.getItem('currentUser');
-    console.log('Current user from localStorage:', currentUser);
+    console.log('初始化 - 用戶:', users, '當前任務:', currentUser);
     updateUserDisplay();
-    if (currentUser) {
-      console.log(`User ${currentUser} found, loading tasks`);
-      loadTasks();
-    } else {
-      console.log('No user found, opening user modal');
-      openUserModal();
-    }
+    if (currentUser) loadTasks();
+    else openUserModal();
     bindEventListeners();
-  } catch (e) {
-    console.error('Error initializing app:', e);
-    tasks = [];
+  } catch (error) {
+    console.error('初始化失敗:', error);
     users = [];
     currentUser = null;
+    tasks = [];
     updateUserDisplay();
     openUserModal();
   }
-});
+}
 
 // 綁定事件監聽器
 function bindEventListeners() {
-  const buttons = {
-    'add-task-btn': openModal,
+  const eventMap = {
+    'add-task-btn': openTaskModal,
     'switch-user-btn': openUserModal,
     'add-task-submit-btn': addTask,
-    'close-modal-btn': closeModal,
-    'add-user-btn': addNewUser,
-    'close-user-modal-btn': closeUserModal
+    'close-modal-btn': closeTaskModal,
+    'add-user-btn': addUser,
+    'close-user-modal-btn': closeUserModal,
+    'close-app-btn': closeApp
   };
 
-  for (const [id, handler] of Object.entries(buttons)) {
+  Object.entries(eventMap).forEach(([id, handler]) => {
     const button = document.getElementById(id);
     if (button) {
-      button.removeEventListener('click', handler);
       button.addEventListener('click', () => {
-        console.log(`${id} clicked`);
+        console.log(`${id} 被點擊`);
         handler();
       });
-      console.log(`${id} listener bound`);
     } else {
-      console.error(`${id} not found`);
+      console.error(`按鈕 ${id} 未找到`);
     }
-  }
+  });
 }
 
 // 載入任務
 function loadTasks() {
   if (!currentUser) {
-    console.warn('No current user, cannot load tasks');
+    console.warn('無當前任務，無法載入任務');
     tasks = [];
     renderTasks();
     return;
   }
   try {
-    const taskData = localStorage.getItem(`tasks_${currentUser}`);
-    tasks = taskData ? JSON.parse(taskData) : [];
-    console.log(`Loaded tasks for ${currentUser}:`, tasks);
+    tasks = JSON.parse(localStorage.getItem(`tasks_${currentUser}`)) || [];
+    console.log(`載入 ${currentUser} 的任務:`, tasks);
     renderTasks();
-  } catch (e) {
-    console.error(`Failed to load tasks for ${currentUser}:`, e);
+  } catch (error) {
+    console.error(`載入 ${currentUser} 的任務失敗:`, error);
     tasks = [];
     renderTasks();
   }
@@ -77,14 +70,14 @@ function loadTasks() {
 // 儲存任務
 function saveTasks() {
   if (!currentUser) {
-    console.warn('No current user, cannot save tasks');
+    console.warn('無當前任務，無法儲存任務');
     return;
   }
   try {
     localStorage.setItem(`tasks_${currentUser}`, JSON.stringify(tasks));
-    console.log(`Tasks saved for ${currentUser}:`, tasks);
-  } catch (e) {
-    console.error(`Failed to save tasks for ${currentUser}:`, e);
+    console.log(`儲存 ${currentUser} 的任務:`, tasks);
+  } catch (error) {
+    console.error(`儲存 ${currentUser} 的任務失敗:`, error);
     alert('儲存任務失敗，請檢查瀏覽器設定');
   }
 }
@@ -93,18 +86,18 @@ function saveTasks() {
 function saveUsers() {
   try {
     localStorage.setItem('users', JSON.stringify(users));
-    console.log('Users saved:', users);
-  } catch (e) {
-    console.error('Failed to save users:', e);
-    alert('儲存用戶列表失敗，請檢查瀏覽器設定');
+    console.log('儲存任務列表:', users);
+  } catch (error) {
+    console.error('儲存任務列表失敗:', error);
+    alert('儲存任務列表失敗，請檢查瀏覽器設定');
   }
 }
 
-// 添加任務
+// 新增任務
 function addTask() {
   if (!currentUser) {
-    console.warn('No user selected, opening user modal');
-    alert('請先選擇用戶');
+    console.warn('無選擇任務，開啟任務模態框');
+    alert('請先選擇大任務');
     openUserModal();
     return;
   }
@@ -112,15 +105,17 @@ function addTask() {
   const descInput = document.getElementById('task-desc');
   const priorityInput = document.getElementById('task-priority');
   if (!titleInput || !descInput || !priorityInput) {
-    console.error('Input elements not found');
-    return alert('頁面元素載入失敗');
+    console.error('任務輸入框未找到');
+    alert('頁面元素載入失敗');
+    return;
   }
   const title = titleInput.value.trim();
   const desc = descInput.value.trim();
   const priority = priorityInput.value;
   if (!title) {
-    console.warn('Task title is empty');
-    return alert('請輸入標題');
+    console.warn('任務標題為空');
+    alert('請輸入標題');
+    return;
   }
   const task = {
     id: Date.now(),
@@ -131,42 +126,37 @@ function addTask() {
     date: new Date().toISOString().split('T')[0]
   };
   tasks.push(task);
-  console.log(`Added task for ${currentUser}:`, task);
+  console.log(`新增任務 (${currentUser}):`, task);
   saveTasks();
   renderTasks();
-  closeModal();
+  closeTaskModal();
 }
 
 // 渲染任務
 function renderTasks() {
   const taskList = document.getElementById('task-list');
   if (!taskList) {
-    console.error('Task list element not found');
+    console.error('任務列表元素未找到');
     return;
   }
   taskList.innerHTML = '';
   if (!currentUser) {
-    taskList.innerHTML = '<p>請選擇用戶以查看任務</p>';
+    taskList.innerHTML = '<p>請選擇任務以查看任務</p>';
     return;
   }
-  if (tasks.length === 0) {
+  if (!tasks.length) {
     taskList.innerHTML = '<p>暫無待辦事項</p>';
     return;
   }
   const priorityOrder = { high: 3, medium: 2, low: 1 };
   tasks.sort((a, b) => {
     if (a.completed !== b.completed) return a.completed - b.completed;
-    if (priorityOrder[a.priority] !== priorityOrder[b.priority]) {
-      return priorityOrder[b.priority] - priorityOrder[a.priority];
-    }
-    return a.id - b.id;
+    return priorityOrder[b.priority] - priorityOrder[a.priority] || a.id - b.id;
   });
   let addedSeparator = false;
   tasks.forEach(task => {
     if (!addedSeparator && task.completed) {
-      const separator = document.createElement('div');
-      separator.innerHTML = '<hr><h3>已完成</h3>';
-      taskList.appendChild(separator);
+      taskList.innerHTML += '<hr><h3>已完成</h3>';
       addedSeparator = true;
     }
     const taskCard = document.createElement('div');
@@ -190,7 +180,7 @@ function toggleTask(id) {
   tasks = tasks.map(task => 
     task.id === id ? { ...task, completed: !task.completed } : task
   );
-  console.log(`Toggled task ${id} for ${currentUser}`);
+  console.log(`切換任務 ${id} 狀態 (${currentUser})`);
   saveTasks();
   renderTasks();
 }
@@ -198,43 +188,40 @@ function toggleTask(id) {
 // 刪除任務
 function deleteTask(id) {
   tasks = tasks.filter(task => task.id !== id);
-  console.log(`Deleted task ${id} for ${currentUser}`);
+  console.log(`刪除任務 ${id} (${currentUser})`);
   saveTasks();
   renderTasks();
 }
 
 // 開啟任務模態框
-function openModal() {
+function openTaskModal() {
   if (!currentUser) {
-    console.warn('No user selected, opening user modal');
-    alert('請先選擇用戶');
+    console.warn('無選擇任務，開啟任務模態框');
+    alert('請先選擇任務');
     openUserModal();
     return;
   }
   const modal = document.getElementById('modal');
   if (!modal) {
-    console.error('Modal element not found');
+    console.error('任務模態框未找到');
     return;
   }
   modal.classList.remove('hidden');
-  console.log('Task modal opened');
+  console.log('任務模態框開啟');
 }
 
 // 關閉任務模態框
-function closeModal() {
+function closeTaskModal() {
   const modal = document.getElementById('modal');
   if (!modal) {
-    console.error('Modal element not found');
+    console.error('任務模態框未找到');
     return;
   }
   modal.classList.add('hidden');
-  const titleInput = document.getElementById('task-title');
-  const descInput = document.getElementById('task-desc');
-  const priorityInput = document.getElementById('task-priority');
-  if (titleInput) titleInput.value = '';
-  if (descInput) descInput.value = '';
-  if (priorityInput) priorityInput.value = 'low';
-  console.log('Task modal closed');
+  document.getElementById('task-title').value = '';
+  document.getElementById('task-desc').value = '';
+  document.getElementById('task-priority').value = 'low';
+  console.log('任務模態框關閉');
 }
 
 // 開啟用戶模態框
@@ -242,68 +229,101 @@ function openUserModal() {
   const userModal = document.getElementById('user-modal');
   const userList = document.getElementById('user-list');
   if (!userModal || !userList) {
-    console.error('User modal or user list element not found');
+    console.error('任務模態框或任務列表未找到');
     return;
   }
-  userList.innerHTML = '';
-  if (users.length === 0) {
-    userList.innerHTML = '<p>無已有用戶，請輸入新用戶名稱</p>';
-  } else {
-    users.forEach(user => {
-      const userItem = document.createElement('div');
-      userItem.className = 'user-list-item';
-      userItem.innerHTML = `
-        <span onclick="switchUser('${user}')">${user}</span>
-        <button onclick="editUser('${user}')">更改</button>
-        <button class="delete-btn" onclick="deleteUser('${user}')">刪除</button>
-      `;
-      userList.appendChild(userItem);
-    });
-  }
+  userList.innerHTML = users.length
+    ? users.map(user => `
+        <div class="user-list-item">
+          <span onclick="switchUser('${user}')">${user}</span>
+          <button onclick="editUser('${user}')">更改</button>
+          <button class="delete-btn" onclick="deleteUser('${user}')">刪除</button>
+        </div>
+      `).join('')
+    : '<p>無已有任務，請輸入新大任務名稱</p>';
   userModal.classList.remove('hidden');
-  console.log('User modal opened');
+  console.log('任務模態框開啟');
+}
+
+// 關閉用戶模態框
+function closeUserModal() {
+  const userModal = document.getElementById('user-modal');
+  if (!userModal) {
+    console.error('任務模態框未找到');
+    return;
+  }
+  userModal.classList.add('hidden');
+  document.getElementById('username-input').value = '';
+  console.log('任務模態框關閉');
 }
 
 // 切換用戶
 function switchUser(user) {
   currentUser = user;
   localStorage.setItem('currentUser', currentUser);
-  console.log(`Switched to user: ${currentUser}`);
+  console.log(`切換到用戶: ${currentUser}`);
   loadTasks();
   updateUserDisplay();
   closeUserModal();
 }
 
-// 編輯用戶名稱
+// 新增用戶
+function addUser() {
+  const usernameInput = document.getElementById('username-input');
+  if (!usernameInput) {
+    console.error('任務輸入框未找到');
+    return;
+  }
+  const username = usernameInput.value.trim();
+  if (!username) {
+    console.warn('任務名稱為空');
+    alert('請輸入大任務名稱');
+    return;
+  }
+  if (users.includes(username)) {
+    console.warn(`用戶 ${username} 已存在`);
+    alert('任務名稱已存在，請直接點選或輸入新名稱');
+    return;
+  }
+  users.push(username);
+  saveUsers();
+  currentUser = username;
+  localStorage.setItem('currentUser', currentUser);
+  console.log(`新增並切換到用戶: ${currentUser}`);
+  loadTasks();
+  updateUserDisplay();
+  closeUserModal();
+}
+
+// 編輯用戶
 function editUser(oldUsername) {
-  const newUsername = prompt('輸入新的用戶名稱：', oldUsername);
-  if (!newUsername || newUsername.trim() === '') {
-    console.warn('New username is empty or cancelled');
+  const newUsername = prompt('輸入新的大任務名稱：', oldUsername)?.trim();
+  if (!newUsername) {
+    console.warn('新任務名稱為空或取消');
     alert('請輸入有效的新用戶名稱');
     return;
   }
-  if (newUsername.trim() === oldUsername) {
-    console.log('Username unchanged');
+  if (newUsername === oldUsername) {
+    console.log('任務名稱未變更');
     return;
   }
-  if (users.includes(newUsername.trim())) {
-    console.warn(`User ${newUsername} already exists`);
-    alert('用戶名稱已存在，請輸入其他名稱');
+  if (users.includes(newUsername)) {
+    console.warn(`用戶 ${newUsername} 已存在`);
+    alert('大任務名稱已存在，請輸入其他名稱');
     return;
   }
-  const index = users.indexOf(oldUsername);
-  users[index] = newUsername.trim();
+  users = users.map(u => u === oldUsername ? newUsername : u);
   if (currentUser === oldUsername) {
-    currentUser = newUsername.trim();
+    currentUser = newUsername;
     localStorage.setItem('currentUser', currentUser);
   }
   const oldTasks = localStorage.getItem(`tasks_${oldUsername}`);
   if (oldTasks) {
-    localStorage.setItem(`tasks_${newUsername.trim()}`, oldTasks);
+    localStorage.setItem(`tasks_${newUsername}`, oldTasks);
     localStorage.removeItem(`tasks_${oldUsername}`);
   }
   saveUsers();
-  console.log(`Edited user from ${oldUsername} to ${newUsername}`);
+  console.log(`用戶從 ${oldUsername} 變更為 ${newUsername}`);
   loadTasks();
   updateUserDisplay();
   openUserModal();
@@ -312,7 +332,7 @@ function editUser(oldUsername) {
 // 刪除用戶
 function deleteUser(user) {
   if (!confirm(`確定要刪除用戶 ${user} 及其所有任務？`)) {
-    console.log(`Deletion of user ${user} cancelled`);
+    console.log(`取消刪除用戶 ${user}`);
     return;
   }
   if (user === currentUser) {
@@ -325,61 +345,30 @@ function deleteUser(user) {
   users = users.filter(u => u !== user);
   localStorage.removeItem(`tasks_${user}`);
   saveUsers();
-  console.log(`Deleted user ${user}`);
+  console.log(`刪除用戶 ${user}`);
   openUserModal();
 }
 
-// 關閉用戶模態框
-function closeUserModal() {
-  const userModal = document.getElementById('user-modal');
-  if (!userModal) {
-    console.error('User modal element not found');
-    return;
-  }
-  userModal.classList.add('hidden');
-  const usernameInput = document.getElementById('username-input');
-  if (usernameInput) usernameInput.value = '';
-  console.log('User modal closed');
-}
-
-// 新增用戶
-function addNewUser() {
-  const usernameInput = document.getElementById('username-input');
-  if (!usernameInput) {
-    console.error('Username input element not found');
-    return;
-  }
-  const username = usernameInput.value.trim();
-  if (!username) {
-    console.warn('Username is empty');
-    return alert('請輸入用戶名稱');
-  }
-  if (users.includes(username)) {
-    console.warn(`User ${username} already exists`);
-    return alert('用戶名稱已存在，請直接點選或輸入新名稱');
-  }
-  users.push(username);
-  saveUsers();
-  currentUser = username;
-  localStorage.setItem('currentUser', currentUser);
-  console.log(`Added and switched to new user: ${currentUser}`);
-  loadTasks();
-  updateUserDisplay();
-  closeUserModal();
+// 關閉應用程式
+function closeApp() {
+  console.log('嘗試關閉應用程式');
+  window.close();
+  setTimeout(() => {
+    alert('無法自動關閉視窗，請手動關閉標籤頁');
+    window.location.href = '/todo-app/';
+  }, 500);
 }
 
 // 更新用戶顯示
 function updateUserDisplay() {
   const currentUserElement = document.getElementById('current-user');
-  const switchUserBtn = document.getElementById('switch-user-btn');
-  if (!currentUserElement || !switchUserBtn) {
-    console.error('User interface elements not found:', {
-      currentUserElement: !!currentUserElement,
-      switchUserBtn: !!switchUserBtn
-    });
+  if (!currentUserElement) {
+    console.error('當前任務元素未找到');
     return;
   }
-  console.log('Updating user display, currentUser:', currentUser);
   currentUserElement.textContent = currentUser || '未登錄';
-  switchUserBtn.classList.remove('hidden');
+  console.log('更新任務顯示:', currentUser);
 }
+
+// 初始化應用程式
+document.addEventListener('DOMContentLoaded', initApp);

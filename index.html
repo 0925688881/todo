@@ -13,8 +13,9 @@
   <div class="container">
     <h1>吳順發的任務記錄</h1>
     <div class="user-info">
-      <span>當前大任務：<span id="current-user">未登錄</span></span>
-      <button id="switch-user-btn">大任務名稱</button>
+      <span>當前用戶：<span id="current-user">未登錄</span></span>
+      <button id="switch-user-btn">添加或選擇大任務名稱</button>
+      <button id="close-app-btn">結束程式</button>
     </div>
     <button id="add-task-btn" class="fab"><span class="material-icons">add</span></button>
     <div id="task-list"></div>
@@ -34,10 +35,10 @@
     </div>
     <div id="user-modal" class="modal hidden">
       <div class="modal-content">
-        <h2>選擇或輸入大任務</h2>
+        <h2>選擇或輸入任務</h2>
         <div id="user-list" class="user-list"></div>
         <input type="text" id="username-input" placeholder="輸入新大任務名稱">
-        <button id="add-user-btn">新增用戶</button>
+        <button id="add-user-btn">新增任務</button>
         <button id="close-user-modal-btn">取消</button>
       </div>
     </div>

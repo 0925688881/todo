@@ -3,7 +3,7 @@ body {
   background-color: #fff9e6;
   margin: 0;
   padding: 20px;
-  font-size: 18px;
+  font-size: 22px; /* 原 18px -> 22px */
 }
 
 .container {
@@ -13,7 +13,7 @@ body {
 }
 
 h1 {
-  font-size: 26px;
+  font-size: 32px; /* 原 26px -> 32px */
   color: #333;
   margin-bottom: 20px;
   text-align: center;
@@ -24,21 +24,21 @@ h1 {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  font-size: 16px;
+  font-size: 20px; /* 原 16px -> 20px */
 }
 
 .user-info span {
   color: #333;
 }
 
-#switch-user-btn, #add-task-submit-btn, #close-modal-btn, #add-user-btn, #close-user-modal-btn {
+#switch-user-btn, #add-task-submit-btn, #close-modal-btn, #add-user-btn, #close-user-modal-btn, #close-app-btn {
   background-color: #28a745;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 12px 24px; /* 原 10px 20px -> 12px 24px，適配字體放大 */
   border-radius: 4px;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 22px; /* 原 18px -> 22px */
   margin-left: 10px;
   z-index: 1000;
   pointer-events: auto;
@@ -49,15 +49,15 @@ h1 {
   min-width: 120px;
 }
 
+#close-app-btn {
+  background-color: #dc3545;
+}
+
 #switch-user-btn:hover, #add-task-submit-btn:hover, #close-modal-btn:hover, #add-user-btn:hover, #close-user-modal-btn:hover {
   background-color: #218838;
 }
 
-#close-modal-btn, #close-user-modal-btn {
-  background-color: #dc3545;
-}
-
-#close-modal-btn:hover, #close-user-modal-btn:hover {
+#close-modal-btn, #close-user-modal-btn, #close-app-btn:hover {
   background-color: #c82333;
 }
 
@@ -83,7 +83,7 @@ h1 {
 }
 
 .fab .material-icons {
-  font-size: 28px;
+  font-size: 32px; /* 原 28px -> 32px */
 }
 
 .task-card {
@@ -109,8 +109,8 @@ h1 {
 
 .task-card input[type="checkbox"] {
   margin-right: 12px;
-  width: 20px;
-  height: 20px;
+  width: 24px; /* 原 20px -> 24px */
+  height: 24px;
 }
 
 .task-card .delete-btn {
@@ -119,26 +119,26 @@ h1 {
   border: none;
   cursor: pointer;
   color: #dc3545;
-  font-size: 16px;
+  font-size: 20px; /* 原 16px -> 20px */
 }
 
 .task-card strong {
-  font-size: 20px;
+  font-size: 24px; /* 原 20px -> 24px */
 }
 
 .task-card p {
-  font-size: 16px;
+  font-size: 20px; /* 原 16px -> 20px */
   margin: 5px 0;
 }
 
 .task-card .priority-low,
 .task-card .priority-medium,
 .task-card .priority-high {
-  font-size: 16px;
+  font-size: 20px; /* 原 16px -> 20px */
 }
 
 .task-card .task-date {
-  font-size: 14px;
+  font-size: 18px; /* 原 14px -> 18px */
   color: #666;
   margin-top: 6px;
 }
@@ -175,7 +175,7 @@ h1 {
 }
 
 .modal-content h2 {
-  font-size: 24px;
+  font-size: 28px; /* 原 24px -> 28px */
   margin-bottom: 15px;
 }
 
@@ -184,16 +184,16 @@ h1 {
 .modal-content select {
   width: 100%;
   margin-bottom: 12px;
-  padding: 10px;
+  padding: 12px; /* 原 10px -> 12px */
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 20px; /* 原 16px -> 20px */
   box-sizing: border-box;
 }
 
 #username-input {
   height: 48px;
-  font-size: 18px;
+  font-size: 22px; /* 原 18px -> 22px */
   padding: 12px;
   margin-bottom: 16px;
 }
@@ -205,14 +205,14 @@ hr {
 
 h3 {
   color: #666;
-  font-size: 18px;
+  font-size: 22px; /* 原 18px -> 22px */
   margin-bottom: 12px;
 }
 
 p {
   text-align: center;
   color: #666;
-  font-size: 16px;
+  font-size: 20px; /* 原 16px -> 20px */
 }
 
 .user-list {
@@ -226,7 +226,7 @@ p {
 
 .user-list-item {
   padding: 8px;
-  font-size: 16px;
+  font-size: 20px; /* 原 16px -> 20px */
   color: #333;
   border-radius: 4px;
   transition: background-color 0.2s;
@@ -245,13 +245,13 @@ p {
 }
 
 .user-list-item button {
-  background-color: #007bff; /* 更改按鈕藍色 */
+  background-color: #007bff;
   color: white;
   border: none;
-  padding: 6px 12px;
+  padding: 8px 16px; /* 原 6px 12px -> 8px 16px */
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 18px; /* 原 14px -> 18px */
   margin-left: 8px;
   z-index: 1000;
   pointer-events: auto;
@@ -259,13 +259,13 @@ p {
 }
 
 .user-list-item button.delete-btn {
-  background-color: #dc3545; /* 刪除按鈕紅色 */
+  background-color: #dc3545;
 }
 
 .user-list-item button:hover {
-  background-color: #0056b3; /* 更改按鈕懸停 */
+  background-color: #0056b3;
 }
 
 .user-list-item button.delete-btn:hover {
-  background-color: #c82333; /* 刪除按鈕懸停 */
+  background-color: #c82333;
 }
