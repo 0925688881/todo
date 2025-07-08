@@ -13,10 +13,36 @@ body {
 }
 
 h1 {
-  font-size: 64px;
+  font-size: 26px;
   color: #333;
   margin-bottom: 20px;
   text-align: center;
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.user-info span {
+  color: #333;
+}
+
+#switch-user-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#switch-user-btn:hover {
+  background-color: #218838;
 }
 
 .fab {
@@ -177,4 +203,26 @@ p {
   text-align: center;
   color: #666;
   font-size: 16px;
+}
+
+.user-list {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.user-list-item {
+  padding: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.user-list-item:hover {
+  background-color: #f0f0f0;
 }
