@@ -1,13 +1,13 @@
 body {
-  font-family: 'Noto Sans TC', 'Roboto', Arial, sans-serif; /* 使用 Noto Sans TC */
+  font-family: 'Noto Sans TC', 'Roboto', Arial, sans-serif;
   background-color: #fff9e6;
   margin: 0;
   padding: 20px;
   font-size: 22px;
-  font-weight: 400; /* 字體稍加粗 */
-  letter-spacing: 0.5px; /* 字間距 */
-  line-height: 1.5; /* 行高提升可讀性 */
-  -webkit-font-smoothing: antialiased; /* 字體平滑 */
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 .container {
@@ -17,9 +17,9 @@ body {
 }
 
 h1 {
-  font-size: 64px;
-  font-weight: 700; /* 加粗標題 */
-  color: #333;
+  font-size: 50px; /* 標題字體大小 */
+  font-weight: 700;
+  color: #003087; /* 深藍色 */
   margin-bottom: 20px;
   text-align: center;
   letter-spacing: 1px;
@@ -27,48 +27,64 @@ h1 {
 
 .user-info {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end; /* 按鈕靠右 */
   align-items: center;
-  margin-bottom: 20px;
-  font-size: 30px;
+  margin-bottom: 10px; /* 減少間距 */
+  font-size: 20px;
   font-weight: 500;
+  flex-wrap: nowrap;
 }
 
-.user-info span {
-  color: #333;
+.current-big-task {
+  display: block; /* 單獨一行 */
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 10px; /* 與下方任務列表間距 */
+  overflow-x: auto; /* 允許水平滾動 */
+  white-space: nowrap; /* 防止換行 */
 }
 
-#switch-user-btn, #add-task-submit-btn, #close-modal-btn, #add-user-btn, #close-user-modal-btn, #close-app-btn {
-  background: linear-gradient(135deg, #28a745 0%, #218838 100%); /* 漸變背景 */
+.current-big-task span {
+  color: #800080; /* 紫色 */
+  font-weight: 700; /* 加粗 */
+  white-space: nowrap; /* 防止文字中斷 */
+}
+
+#current-big-task {
+  color: #333; /* 實際大任務名稱保持黑色 */
+}
+
+#switch-big-task-btn, #add-task-submit-btn, #close-modal-btn, #add-big-task-btn, #close-big-task-modal-btn, #close-app-btn {
+  background: linear-gradient(135deg, #28a745 0%, #218838 100%);
   color: white;
   border: none;
   padding: 12px 24px;
-  border-radius: 6px; /* 原 4px -> 6px */
+  border-radius: 6px;
   cursor: pointer;
   font-size: 22px;
   font-weight: 500;
   margin-left: 10px;
   z-index: 1000;
   pointer-events: auto;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 添加陰影 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
 }
 
-#switch-user-btn:hover, #add-task-submit-btn:hover, #close-modal-btn:hover, #add-user-btn:hover, #close-user-modal-btn:hover {
-  background: linear-gradient(135deg, #218838 0%, #1c7430 100%);
-  transform: translateY(-2px); /* 懸停縮放 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+#switch-big-task-btn {
+  min-width: 180px; /* 適應「添加或選擇大任務名稱」 */
 }
 
-#switch-user-btn {
-  min-width: 120px;
+#switch-big-task-btn:hover, #add-task-submit-btn:hover, #close-modal-btn:hover, #add-big-task-btn:hover, #close-big-task-modal-btn:hover {
+  background: linear-gradient(135deg, #218838 0%, #1c7430 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 #close-app-btn {
   background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
 }
 
-#close-app-btn:hover, #close-modal-btn, #close-user-modal-btn {
+#close-app-btn:hover, #close-modal-btn, #close-big-task-modal-btn {
   background: linear-gradient(135deg, #c82333 0%, #b21f2d 100%);
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -197,7 +213,7 @@ h1 {
   max-width: 450px;
   position: relative;
   z-index: 3100;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 添加模態框陰影 */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .modal-content h2 {
@@ -214,7 +230,7 @@ h1 {
   margin-bottom: 12px;
   padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 6px; /* 原 4px -> 6px */
+  border-radius: 6px;
   font-size: 20px;
   font-weight: 400;
   box-sizing: border-box;
@@ -228,7 +244,7 @@ h1 {
   outline: none;
 }
 
-#username-input {
+#big-task-input {
   height: 48px;
   font-size: 22px;
   padding: 12px;
@@ -254,16 +270,16 @@ p {
   font-weight: 400;
 }
 
-.user-list {
+.big-task-list {
   max-height: 150px;
   overflow-y: auto;
   margin-bottom: 15px;
   border: 1px solid #ccc;
-  border-radius: 6px; /* 原 4px -> 6px */
+  border-radius: 6px;
   padding: 10px;
 }
 
-.user-list-item {
+.big-task-list-item {
   padding: 8px;
   font-size: 20px;
   font-weight: 400;
@@ -275,21 +291,21 @@ p {
   justify-content: space-between;
 }
 
-.user-list-item:hover {
+.big-task-list-item:hover {
   background-color: #f0f0f0;
 }
 
-.user-list-item span {
+.big-task-list-item span {
   cursor: pointer;
   flex-grow: 1;
 }
 
-.user-list-item button {
+.big-task-list-item button {
   background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 6px; /* 原 4px -> 6px */
+  border-radius: 6px;
   cursor: pointer;
   font-size: 18px;
   font-weight: 500;
@@ -300,16 +316,16 @@ p {
   transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
 }
 
-.user-list-item button.delete-btn {
+.big-task-list-item button.delete-btn {
   background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
 }
 
-.user-list-item button:hover {
+.big-task-list-item button:hover {
   background: linear-gradient(135deg, #0056b3 0%, #004494 100%);
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.user-list-item button.delete-btn:hover {
+.big-task-list-item button.delete-btn:hover {
   background: linear-gradient(135deg, #c82333 0%, #b21f2d 100%);
 }

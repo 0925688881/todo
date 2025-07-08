@@ -1,6 +1,6 @@
 const GHPATH = '/todo-app';
 const APP_PREFIX = 'todo_';
-const VERSION = 'version_14'; // 更新版本
+const VERSION = 'version_16'; // 更新版本
 const CACHE_NAME = APP_PREFIX + VERSION;
 const FILES_TO_CACHE = [
   `${GHPATH}/index.html`,
