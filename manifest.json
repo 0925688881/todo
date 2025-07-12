@@ -1,7 +1,7 @@
 {
-  "short_name": "吳順發任務",           
-  "name": "吳順發的任務",             
-  "start_url": "./",
+  "name": "吳順發的任務",
+  "short_name": "吳順發任務",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#317EFB",
